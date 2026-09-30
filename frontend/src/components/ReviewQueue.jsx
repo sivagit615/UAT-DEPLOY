@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
 const STATUS_CONFIG = {
-  pending: { label: 'Pending', color: 'text-slate-400', bg: 'bg-slate-500/10', border: 'border-slate-500/30', icon: '⏳' },
-  approved: { label: 'Approved', color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/30', icon: '✓' },
+  pending: { label: 'Pending', color: 'text-[#94A3B8]', bg: 'bg-[#94A3B8]/10', border: 'border-[#94A3B8]/30', icon: '⏳' },
+  approved: { label: 'Approved', color: 'text-[#34D399]', bg: 'bg-[#34D399]/10', border: 'border-[#34D399]/30', icon: '✓' },
   flagged: { label: 'Flagged', color: 'text-rose-400', bg: 'bg-rose-500/10', border: 'border-rose-500/30', icon: '⚑' },
 }
 
@@ -46,9 +46,9 @@ export default function ReviewQueue({ testCases, onUpdateCase }) {
   }
 
   return (
-    <div className="glass-card overflow-hidden animate-fade-in">
+    <div className="glass-card overflow-hidden animate-fade-in border border-[#1E293B] bg-[#0B132B]">
       {/* Header */}
-      <div className="px-6 py-4 border-b border-slate-700/50 bg-slate-900/40">
+      <div className="px-6 py-4 border-b border-[#1E293B] bg-[#070C1E]">
         <div className="flex items-center justify-between flex-wrap gap-3">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg bg-violet-500/10 border border-violet-500/20 flex items-center justify-center">
@@ -57,8 +57,8 @@ export default function ReviewQueue({ testCases, onUpdateCase }) {
               </svg>
             </div>
             <div>
-              <h2 className="text-sm font-semibold text-slate-100">QA Review & Approval Queue</h2>
-              <p className="text-xs text-slate-400">{testCases.length} test cases awaiting review</p>
+              <h2 className="text-sm font-semibold text-[#F3F4F6]">QA Review & Approval Queue</h2>
+              <p className="text-xs text-[#94A3B8]">{testCases.length} test cases awaiting review</p>
             </div>
           </div>
           <button onClick={approveAll} className="btn-primary text-xs !py-2 !px-4">
@@ -78,14 +78,14 @@ export default function ReviewQueue({ testCases, onUpdateCase }) {
                 key={status}
                 onClick={() => setFilterStatus(filterStatus === status ? 'all' : status)}
                 className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs transition-all
-                  ${filterStatus === status ? `${cfg.bg} ${cfg.color} border ${cfg.border}` : 'text-slate-500 hover:text-slate-300'}`}
+                  ${filterStatus === status ? `${cfg.bg} ${cfg.color} border ${cfg.border}` : 'text-[#94A3B8] hover:text-[#F3F4F6]'}`}
               >
                 <span className={`font-bold ${cfg.color}`}>{count}</span> {cfg.label}
               </button>
             )
           })}
           {filterStatus !== 'all' && (
-            <button onClick={() => setFilterStatus('all')} className="text-xs text-cyan-400 hover:text-cyan-300">
+            <button onClick={() => setFilterStatus('all')} className="text-xs text-[#38BDF8] hover:underline">
               Show All
             </button>
           )}
@@ -93,22 +93,22 @@ export default function ReviewQueue({ testCases, onUpdateCase }) {
       </div>
 
       {/* Queue items */}
-      <div className="divide-y divide-slate-800/60 max-h-[600px] overflow-y-auto">
+      <div className="divide-y divide-[#1E293B] max-h-[600px] overflow-y-auto">
         {filtered.map((tc, i) => (
           <div
             key={tc.test_id}
-            className="px-6 py-4 hover:bg-slate-800/30 transition-colors animate-fade-in"
+            className="px-6 py-4 hover:bg-[#050814]/50 transition-colors animate-fade-in"
             style={{ animationDelay: `${i * 30}ms`, animationFillMode: 'both' }}
           >
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="font-mono text-xs font-semibold text-cyan-400 bg-cyan-500/5 border border-cyan-500/20 px-2 py-0.5 rounded">
+                  <span className="font-mono text-xs font-semibold text-[#38BDF8] bg-[#38BDF8]/10 border border-[#38BDF8]/20 px-2 py-0.5 rounded">
                     {tc.test_id}
                   </span>
                   <StatusBadge status={statuses[tc.test_id]} />
                   <span className={`text-xs px-2 py-0.5 rounded-full border
-                    ${tc.test_type === 'Positive' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' :
+                    ${tc.test_type === 'Positive' ? 'bg-[#34D399]/10 text-[#34D399] border-[#34D399]/30' :
                       tc.test_type === 'Negative' ? 'bg-rose-500/10 text-rose-400 border-rose-500/30' :
                       tc.test_type === 'Edge' ? 'bg-purple-500/10 text-purple-400 border-purple-500/30' :
                       tc.test_type === 'Recovery' ? 'bg-teal-500/10 text-teal-400 border-teal-500/30' :
@@ -116,10 +116,10 @@ export default function ReviewQueue({ testCases, onUpdateCase }) {
                     {tc.test_type}
                   </span>
                 </div>
-                <p className="text-sm font-medium text-slate-200">{tc.title}</p>
-                <p className="text-xs text-slate-500 mt-1">{tc.expected_result}</p>
+                <p className="text-sm font-medium text-[#F3F4F6]">{tc.title}</p>
+                <p className="text-xs text-[#94A3B8] mt-1">{tc.expected_result}</p>
                 {tc.source_citation && (
-                  <p className="text-xs text-indigo-400/70 mt-1 italic">📌 {tc.source_citation}</p>
+                  <p className="text-xs text-[#38BDF8]/80 mt-1 italic">📌 {tc.source_citation}</p>
                 )}
 
                 {/* Edit notes */}
@@ -130,11 +130,11 @@ export default function ReviewQueue({ testCases, onUpdateCase }) {
                       placeholder="Add review notes..."
                       value={editNotes[tc.test_id] || ''}
                       onChange={e => setEditNotes(prev => ({ ...prev, [tc.test_id]: e.target.value }))}
-                      className="flex-1 px-3 py-1.5 text-xs rounded-lg bg-slate-900 border border-slate-700 text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-cyan-500/50"
+                      className="flex-1 px-3 py-1.5 text-xs rounded-lg bg-[#050814] border border-[#1E293B] text-[#F3F4F6] placeholder-[#64748B] focus:outline-none focus:ring-1 focus:ring-[#38BDF8]"
                     />
                     <button
                       onClick={() => setEditingId(null)}
-                      className="text-xs text-slate-400 hover:text-slate-200 px-2"
+                      className="text-xs text-[#94A3B8] hover:text-[#F3F4F6] px-2"
                     >Done</button>
                   </div>
                 )}
@@ -144,7 +144,7 @@ export default function ReviewQueue({ testCases, onUpdateCase }) {
               <div className="flex items-center gap-1.5 flex-shrink-0">
                 <button
                   onClick={() => setStatus(tc.test_id, 'approved')}
-                  className="p-1.5 rounded-lg hover:bg-emerald-500/10 text-slate-500 hover:text-emerald-400 transition-all"
+                  className="p-1.5 rounded-lg hover:bg-[#34D399]/10 text-[#94A3B8] hover:text-[#34D399] transition-all"
                   title="Approve"
                 >
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -153,7 +153,7 @@ export default function ReviewQueue({ testCases, onUpdateCase }) {
                 </button>
                 <button
                   onClick={() => setStatus(tc.test_id, 'flagged')}
-                  className="p-1.5 rounded-lg hover:bg-rose-500/10 text-slate-500 hover:text-rose-400 transition-all"
+                  className="p-1.5 rounded-lg hover:bg-rose-500/10 text-[#94A3B8] hover:text-rose-400 transition-all"
                   title="Flag for Review"
                 >
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -162,7 +162,7 @@ export default function ReviewQueue({ testCases, onUpdateCase }) {
                 </button>
                 <button
                   onClick={() => setEditingId(editingId === tc.test_id ? null : tc.test_id)}
-                  className="p-1.5 rounded-lg hover:bg-slate-700 text-slate-500 hover:text-slate-300 transition-all"
+                  className="p-1.5 rounded-lg hover:bg-[#1E293B] text-[#94A3B8] hover:text-[#F3F4F6] transition-all"
                   title="Edit Notes"
                 >
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -176,11 +176,11 @@ export default function ReviewQueue({ testCases, onUpdateCase }) {
       </div>
 
       {/* Footer */}
-      <div className="px-6 py-3 border-t border-slate-800/80 bg-slate-900/30 flex items-center justify-between">
-        <span className="text-xs text-slate-500">
-          <span className="text-emerald-400 font-semibold">{counts.approved}</span> approved ·{' '}
+      <div className="px-6 py-3 border-t border-[#1E293B] bg-[#070C1E] flex items-center justify-between">
+        <span className="text-xs text-[#64748B]">
+          <span className="text-[#34D399] font-semibold">{counts.approved}</span> approved ·{' '}
           <span className="text-rose-400 font-semibold">{counts.flagged}</span> flagged ·{' '}
-          <span className="text-slate-400 font-semibold">{counts.pending}</span> pending
+          <span className="text-[#94A3B8] font-semibold">{counts.pending}</span> pending
         </span>
       </div>
     </div>

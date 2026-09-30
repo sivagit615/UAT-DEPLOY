@@ -9,25 +9,25 @@ function TestTypeBadge({ type }) {
   if (normalised === 'boundary') return <span className="badge-boundary">◈ Boundary</span>
   if (normalised === 'edge') return <span className="badge-edge">⚡ Edge</span>
   if (normalised === 'recovery') return <span className="badge-recovery">↻ Recovery</span>
-  return <span className="text-xs text-slate-400">{type}</span>
+  return <span className="text-xs text-[#94A3B8]">{type}</span>
 }
 
 function StepList({ steps }) {
   if (!steps || steps.length === 0)
-    return <span className="text-slate-500 text-xs italic">—</span>
+    return <span className="text-[#64748B] text-xs italic">—</span>
   if (typeof steps === 'string')
-    return <p className="text-xs leading-relaxed text-slate-300">{steps}</p>
+    return <p className="text-xs leading-relaxed text-[#F3F4F6]">{steps}</p>
   return (
     <ol className="space-y-1.5">
       {steps.map((step, i) => (
         <li key={i} className="flex gap-2 text-xs leading-relaxed">
           <span
-            className="flex-shrink-0 w-4 h-4 rounded-full bg-slate-800 border border-slate-700
-                       text-slate-400 flex items-center justify-center font-mono text-[10px] mt-0.5"
+            className="flex-shrink-0 w-4 h-4 rounded-full bg-[#050814] border border-[#1E293B]
+                       text-[#38BDF8] flex items-center justify-center font-mono text-[10px] mt-0.5"
           >
             {i + 1}
           </span>
-          <span className="text-slate-300">{step}</span>
+          <span className="text-[#F3F4F6]">{step}</span>
         </li>
       ))}
     </ol>
@@ -96,9 +96,9 @@ export default function UATMatrix({ testCases, summary }) {
   })
 
   return (
-    <div className="glass-card overflow-hidden animate-fade-in">
+    <div className="glass-card overflow-hidden animate-fade-in border border-[#1E293B] bg-[#0B132B]">
       {/* ── Header ── */}
-      <div className="px-6 py-4 border-b border-slate-700/50 bg-slate-900/40">
+      <div className="px-6 py-4 border-b border-[#1E293B] bg-[#070C1E]">
         <div className="flex items-start justify-between gap-4 flex-wrap">
           {/* Title */}
           <div className="flex items-center gap-3">
@@ -118,8 +118,8 @@ export default function UATMatrix({ testCases, summary }) {
               </svg>
             </div>
             <div>
-              <h2 className="text-sm font-semibold text-slate-100">UAT Test Matrix</h2>
-              <p className="text-xs text-slate-400">
+              <h2 className="text-sm font-semibold text-[#F3F4F6]">UAT Test Matrix</h2>
+              <p className="text-xs text-[#94A3B8]">
                 {testCases.length} test case{testCases.length !== 1 ? 's' : ''} generated
               </p>
             </div>
@@ -149,7 +149,7 @@ export default function UATMatrix({ testCases, summary }) {
 
         {/* AI Summary */}
         {summary && (
-          <p className="mt-3 text-xs text-slate-400 leading-relaxed border-t border-slate-700/50 pt-3 italic">
+          <p className="mt-3 text-xs text-[#94A3B8] leading-relaxed border-t border-[#1E293B] pt-3 italic">
             {summary}
           </p>
         )}
@@ -159,7 +159,7 @@ export default function UATMatrix({ testCases, summary }) {
           {/* Search box */}
           <div className="relative flex-1 min-w-[180px] max-w-xs">
             <svg
-              className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-500"
+              className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#64748B]"
               fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
             >
               <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
@@ -170,14 +170,14 @@ export default function UATMatrix({ testCases, summary }) {
               placeholder="Search by title, ID, result…"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-8 pr-3 py-1.5 text-xs rounded-lg bg-slate-900 border border-slate-700
-                         text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-1
-                         focus:ring-cyan-500/50 focus:border-cyan-500/50 transition-all"
+              className="w-full pl-8 pr-3 py-1.5 text-xs rounded-lg bg-[#050814] border border-[#1E293B]
+                         text-[#F3F4F6] placeholder-[#64748B] focus:outline-none focus:ring-1
+                         focus:ring-[#38BDF8] focus:border-[#38BDF8] transition-all"
             />
             {search && (
               <button
                 onClick={() => setSearch('')}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors"
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#64748B] hover:text-[#F3F4F6] transition-colors"
               >
                 <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -187,7 +187,7 @@ export default function UATMatrix({ testCases, summary }) {
           </div>
 
           {/* Type filter pills */}
-          <div className="flex rounded-lg overflow-hidden border border-slate-700 bg-slate-900">
+          <div className="flex rounded-lg overflow-hidden border border-[#1E293B] bg-[#050814]">
             {TYPE_FILTER_OPTIONS.map((opt) => (
               <button
                 key={opt}
@@ -195,8 +195,8 @@ export default function UATMatrix({ testCases, summary }) {
                 onClick={() => setFilter(opt)}
                 className={`px-3 py-1.5 text-xs font-medium transition-all duration-150
                   ${filter === opt
-                    ? 'bg-indigo-600 text-white'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+                    ? 'bg-[#2563EB] text-white'
+                    : 'text-[#94A3B8] hover:text-white hover:bg-[#0B132B]'
                   }`}
               >
                 {opt}
@@ -223,9 +223,9 @@ export default function UATMatrix({ testCases, summary }) {
           <tbody>
             {filtered.length === 0 ? (
               <tr>
-                <td colSpan={7} className="text-center py-12 text-slate-500 text-sm">
+                <td colSpan={7} className="text-center py-12 text-[#64748B] text-sm">
                   <div className="flex flex-col items-center gap-2">
-                    <svg className="w-8 h-8 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <svg className="w-8 h-8 text-[#334155]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                     </svg>
                     No test cases match your filter.
@@ -240,18 +240,18 @@ export default function UATMatrix({ testCases, summary }) {
                   style={{ animationDelay: `${i * 35}ms`, animationFillMode: 'both' }}
                 >
                   <td>
-                    <span className="font-mono text-xs font-semibold text-cyan-400 bg-cyan-500/5 border border-cyan-500/20 px-2 py-0.5 rounded whitespace-nowrap">
+                    <span className="font-mono text-xs font-semibold text-[#38BDF8] bg-[#38BDF8]/10 border border-[#38BDF8]/20 px-2 py-0.5 rounded whitespace-nowrap">
                       {tc.test_id}
                     </span>
                   </td>
                   <td>
-                    <span className="font-medium text-slate-200 text-xs">{tc.title}</span>
+                    <span className="font-medium text-[#F3F4F6] text-xs">{tc.title}</span>
                   </td>
                   <td>
                     <TestTypeBadge type={tc.test_type} />
                   </td>
                   <td>
-                    <p className="text-xs text-slate-400 leading-relaxed">
+                    <p className="text-xs text-[#94A3B8] leading-relaxed">
                       {tc.preconditions || '—'}
                     </p>
                   </td>
@@ -259,10 +259,10 @@ export default function UATMatrix({ testCases, summary }) {
                     <StepList steps={tc.steps} />
                   </td>
                   <td>
-                    <p className="text-xs text-slate-300 leading-relaxed">{tc.expected_result}</p>
+                    <p className="text-xs text-[#F3F4F6] leading-relaxed">{tc.expected_result}</p>
                   </td>
                   <td>
-                    <p className="text-xs text-indigo-400/70 italic leading-relaxed">
+                    <p className="text-xs text-[#38BDF8]/80 italic leading-relaxed">
                       {tc.source_citation || '—'}
                     </p>
                   </td>
@@ -274,10 +274,10 @@ export default function UATMatrix({ testCases, summary }) {
       </div>
 
       {/* ── Footer ── */}
-      <div className="px-6 py-3 border-t border-slate-800/80 bg-slate-900/30 flex items-center justify-between">
-        <span className="text-xs text-slate-500">
+      <div className="px-6 py-3 border-t border-[#1E293B] bg-[#070C1E] flex items-center justify-between">
+        <span className="text-xs text-[#64748B]">
           Showing{' '}
-          <span className="text-slate-300 font-medium">{filtered.length}</span> of{' '}
+          <span className="text-[#F3F4F6] font-medium">{filtered.length}</span> of{' '}
           <span className="text-slate-300 font-medium">{testCases.length}</span> tests
         </span>
         <button

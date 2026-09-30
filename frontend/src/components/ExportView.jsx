@@ -4,14 +4,19 @@ export default function ExportView({ result }) {
   const [copiedJira, setCopiedJira] = useState(false);
 
   if (!result || !result.test_cases) {
-    return <div className="text-slate-500 p-6 text-center">No data available for export.</div>;
+    return (
+      <div className="bg-white p-12 text-center border border-[#E2DED4] rounded-2xl shadow-sm">
+        <div className="w-12 h-12 rounded-full bg-[#F4F1EA] text-[#5C6370] flex items-center justify-center mx-auto mb-3 text-xl border border-[#E2DED4]">📥</div>
+        <p className="text-[#171512] font-bold">No suite data available for export.</p>
+      </div>
+    );
   }
 
   const downloadJSON = () => {
     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(result, null, 2));
     const downloadAnchorNode = document.createElement('a');
     downloadAnchorNode.setAttribute("href", dataStr);
-    downloadAnchorNode.setAttribute("download", "testify_export.json");
+    downloadAnchorNode.setAttribute("download", "testmind_uat_matrix.json");
     document.body.appendChild(downloadAnchorNode);
     downloadAnchorNode.click();
     downloadAnchorNode.remove();
@@ -33,22 +38,22 @@ export default function ExportView({ result }) {
     
     const downloadAnchorNode = document.createElement('a');
     downloadAnchorNode.setAttribute("href", encodeURI(csvContent));
-    downloadAnchorNode.setAttribute("download", "testify_export.csv");
+    downloadAnchorNode.setAttribute("download", "testmind_uat_matrix.csv");
     document.body.appendChild(downloadAnchorNode);
     downloadAnchorNode.click();
     downloadAnchorNode.remove();
   };
 
   const copyJiraPayload = () => {
-    let markdown = `# UAT Test Cases\n\n`;
+    let markdown = `# UAT Test Matrix Suite\n\n`;
     result.test_cases.forEach(tc => {
       markdown += `## ${tc.test_id}: ${tc.title}\n`;
-      markdown += `**Type:** ${tc.test_type} | **Source:** ${tc.source_citation || 'N/A'}\n\n`;
-      markdown += `### Steps:\n`;
+      markdown += `**Type:** ${tc.test_type} | **Source Ref:** ${tc.source_citation || 'N/A'}\n\n`;
+      markdown += `### Execution Steps:\n`;
       tc.steps?.forEach((step, i) => {
         markdown += `${i + 1}. ${step}\n`;
       });
-      markdown += `\n### Expected Result:\n${tc.expected_result}\n\n---\n\n`;
+      markdown += `\n### Expected Outcome:\n${tc.expected_result}\n\n---\n\n`;
     });
 
     navigator.clipboard.writeText(markdown).then(() => {
@@ -59,35 +64,46 @@ export default function ExportView({ result }) {
 
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className="glass-card p-8 text-center max-w-2xl mx-auto mt-8">
-        <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-cyan-500/20 to-indigo-500/20 border border-indigo-500/30 flex items-center justify-center mx-auto mb-6">
-          <span className="text-3xl">🚀</span>
+      <div className="bg-white p-8 sm:p-10 text-center max-w-3xl mx-auto my-4 border border-[#E2DED4] rounded-2xl shadow-sm">
+        <div className="w-16 h-16 rounded-2xl bg-[#3B4B34]/10 border border-[#3B4B34]/30 flex items-center justify-center mx-auto mb-6 shadow-sm text-3xl">
+          🚀
         </div>
         
-        <h2 className="text-2xl font-bold text-slate-100 mb-2">Export Your Test Suite</h2>
-        <p className="text-slate-400 mb-8 text-sm">Download your generated artifacts to integrate seamlessly with your ALM tools.</p>
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#171512] mb-2 font-sans tracking-tight">Export Test Suite Artifacts</h2>
+        <p className="text-[#5C6370] mb-8 text-sm max-w-lg mx-auto leading-relaxed">
+          Download structured test case artifacts or copy ready-to-paste markdown payloads for Jira, Azure DevOps, or TestRail.
+        </p>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <button onClick={downloadJSON} className="flex flex-col items-center justify-center gap-3 p-6 rounded-xl bg-slate-900/80 border border-slate-700/50 hover:border-cyan-500/50 hover:bg-slate-800/80 transition-all group">
-            <span className="text-2xl group-hover:scale-110 transition-transform">📄</span>
-            <span className="font-semibold text-slate-200 text-sm">Download JSON</span>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <button onClick={downloadJSON} className="flex flex-col items-center justify-center gap-3 p-6 rounded-xl bg-[#F4F1EA] border border-[#E2DED4] hover:border-[#3B4B34] hover:bg-[#F7F5EE] transition-all duration-200 cursor-pointer group shadow-sm">
+            <span className="text-3xl group-hover:scale-110 transition-transform">📄</span>
+            <div className="text-center">
+              <span className="font-bold text-[#171512] text-sm block">Download JSON</span>
+              <span className="text-[11px] text-[#5C6370]">Structured Data</span>
+            </div>
           </button>
           
-          <button onClick={downloadCSV} className="flex flex-col items-center justify-center gap-3 p-6 rounded-xl bg-slate-900/80 border border-slate-700/50 hover:border-emerald-500/50 hover:bg-slate-800/80 transition-all group">
-            <span className="text-2xl group-hover:scale-110 transition-transform">📊</span>
-            <span className="font-semibold text-slate-200 text-sm">Download CSV</span>
+          <button onClick={downloadCSV} className="flex flex-col items-center justify-center gap-3 p-6 rounded-xl bg-[#F4F1EA] border border-[#E2DED4] hover:border-[#3B4B34] hover:bg-[#F7F5EE] transition-all duration-200 cursor-pointer group shadow-sm">
+            <span className="text-3xl group-hover:scale-110 transition-transform">📊</span>
+            <div className="text-center">
+              <span className="font-bold text-[#171512] text-sm block">Download CSV</span>
+              <span className="text-[11px] text-[#5C6370]">Excel / Spreadsheet</span>
+            </div>
           </button>
           
-          <button onClick={copyJiraPayload} className="flex flex-col items-center justify-center gap-3 p-6 rounded-xl bg-slate-900/80 border border-slate-700/50 hover:border-indigo-500/50 hover:bg-slate-800/80 transition-all group relative overflow-hidden">
+          <button onClick={copyJiraPayload} className="flex flex-col items-center justify-center gap-3 p-6 rounded-xl bg-[#F4F1EA] border border-[#E2DED4] hover:border-[#3B4B34] hover:bg-[#F7F5EE] transition-all duration-200 cursor-pointer group relative overflow-hidden shadow-sm">
             {copiedJira ? (
-              <div className="absolute inset-0 bg-indigo-600 flex flex-col items-center justify-center gap-2 animate-fade-in text-white">
+              <div className="absolute inset-0 bg-[#3B4B34] flex flex-col items-center justify-center gap-1.5 animate-fade-in text-white">
                 <span className="text-2xl">✅</span>
-                <span className="font-bold text-sm">Copied!</span>
+                <span className="font-bold text-sm">Copied to Clipboard!</span>
               </div>
             ) : (
               <>
-                <span className="text-2xl group-hover:scale-110 transition-transform">📋</span>
-                <span className="font-semibold text-slate-200 text-sm">Copy Jira Payload</span>
+                <span className="text-3xl group-hover:scale-110 transition-transform">📋</span>
+                <div className="text-center">
+                  <span className="font-bold text-[#171512] text-sm block">Copy Jira Payload</span>
+                  <span className="text-[11px] text-[#5C6370]">Markdown Format</span>
+                </div>
               </>
             )}
           </button>
@@ -96,3 +112,5 @@ export default function ExportView({ result }) {
     </div>
   );
 }
+
+
